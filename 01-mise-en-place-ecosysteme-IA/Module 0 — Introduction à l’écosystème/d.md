@@ -1,286 +1,239 @@
+<h1 id="intro-ecosysteme-ia">Introduction à l’écosystème en Intelligence Artificielle</h1>
 
-<h1 id="intro-linux-ia">Introduction à Linux pour l'Intelligence Artificielle</h1>
+Objectif : offrir une vue d’ensemble claire et non technique de l’écosystème IA — du stockage et calcul jusqu’au déploiement — avec des repères concrets pour se situer.
 
-Objectif : passer de “je n’ai jamais touché Linux” à “je peux entraîner un modèle et le déployer proprement”.
-
-<h2 id="ce-que-vous-allez-apprendre">Ce que vous allez apprendre</h2>
-
-- Comprendre pourquoi Linux est la base de l’IA moderne.
-- Installer un environnement Python propre (qui ne se casse pas).
-- Utiliser votre GPU (ou vérifier clairement s’il est utile/disponible).
-- Lancer un entraînement, suivre les expériences, déployer une petite API.
-- Diagnostiquer ce qui rame (CPU, GPU, RAM, disque, dépendances).
-
-<h2 id="plan-express">Plan express (vue d’ensemble)</h2>
-
-```mermaid
-flowchart LR
-  A[Linux prêt] --> B[Env. Python isolé]
-  B --> C[GPU OK]
-  C --> D[Entraînement simple]
-  D --> E[Suivi expériences]
-  E --> F[Packaging & Docker]
-  F --> G[API d'inférence]
-  G --> H[Monitoring & itérations]
-````
-
-<h2 id="pourquoi-linux-ia">1. Pourquoi Linux pour l’IA ?</h2>
-
-* Performance : Linux contrôle mieux le matériel (CPU/GPU/IO).
-* Ouverture : tout l’écosystème IA est né et optimisé pour Linux.
-* Portabilité : le même projet tourne identique en local, sur serveur, en cloud.
-* Coût et robustesse : moins de licences, plus de documentation, plus de contrôle.
-
-<h2 id="ecosysteme-ia">2. L’écosystème IA sous Linux, en un coup d’œil</h2>
+<h2 id="carte-densemble">1. Carte d’ensemble de l’écosystème</h2>
 
 ```mermaid
 mindmap
-root((Linux & IA))
-  Applications
-    Jupyter
-    MLflow
-    Streamlit
-    Gradio
-  Frameworks
-    PyTorch
-    TensorFlow
+root((Écosystème IA))
+  Données & Stockage
+    Fichiers/Objets (Parquet, S3)
+    Bases (PostgreSQL)
+    Lakehouse (Databricks)
+  Calcul
+    CPU
+    GPU (CUDA/ROCm)
+    Clusters (Spark, Dask)
+  Langages & Libs
+    Python
     Scikit-learn
-    XGBoost
-  Parallélisation
-    CUDA (NVIDIA)
-    ROCm (AMD)
-    Dask
-    Ray
-  Infra
-    Docker
+    TensorFlow / PyTorch
+    CuDF/CuPy/cuML
+  Développement
+    Linux
+    Git / GitHub Actions
+    Conda / Jupyter / Anaconda
+  Apps & APIs
+    Streamlit (Front)
+    FastAPI / Flask / Django (Back)
+  Conteneurs & Orchestration
+    Docker / docker-compose
     Kubernetes
-    SLURM
-    Singularity
+    MLOps (MLflow)
+  Cloud & Services
+    AWS SageMaker
+    Databricks (ML)
+    Snowflake (BI/IA)
+    AWS Bedrock (GenAI)
+  Cas & Modèles
+    YOLO (vision)
+    NLP / Audio / Multimodal
 ```
 
-<h2 id="debuter-5-min">3. Démarrer en 5 minutes (si vous êtes pressé)</h2>
+<h2 id="stockage-calcul">2. Stockage et Calcul</h2>
 
-1. Ouvrir un terminal et vérifier Python :
+* **Stockage fichiers/objets** : Parquet/CSV sur disque, S3/MinIO en objet.
 
-```
-python3 --version
-```
+* **Base relationnelle** : **PostgreSQL** pour données structurées, métadonnées et applications.
 
-2. Créer un environnement isolé (au choix) :
+* **Lakehouse** : **Databricks** (Delta Lake + Spark) pour unifier data lake et entrepôt analytique.
 
-```
-# Variante rapide : venv
-python3 -m venv .venv && source .venv/bin/activate
-pip install --upgrade pip
+* **CPU vs GPU** :
 
-# Variante “scientifique” : conda/mamba
-mamba create -n ia python=3.11 -y && mamba activate ia
-```
+  * **CPU** polyvalent, bon pour préparation de données et petites charges.
+  * **GPU** accélère massivement l’entraînement/inférence en deep learning.
 
-3. Installer PyTorch CPU (fonctionne partout) :
+* **Calcul distribué** :
 
-```
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-```
+  * **Spark** (Databricks) pour gros volumes distribués (ETL, SQL, ML).
+  * **Dask** (Python natif) pour paralléliser pandas/numpy sur une ou plusieurs machines.
 
-4. Vérifier :
+<h2 id="python-base">3. Python comme colonne vertébrale</h2>
 
-```python
-import torch
-print(torch.__version__, torch.cuda.is_available())
-```
+* **Nettoyage/Analyse** : `pandas` (tableaux), `numpy` (math), équivalents GPU : **cuDF**, **CuPy**, **cuML**, **cuDNN**.
 
-Si `cuda.is_available()` renvoie False sur une machine NVIDIA, passez à la section GPU.
+* **Machine Learning** : **scikit-learn**.
 
-<h2 id="distributions-ia">4. Linux : par où commencer ?</h2>
+* **Deep Learning** : **TensorFlow** et **PyTorch**.
 
-* Recommandé : **Ubuntu 22.04 LTS** (simple, bien documenté, compatible GPU).
-* Alternatives :
+* **Interfaces** :
 
-  * Pop!_OS (excellent sur poste de travail NVIDIA)
-  * Rocky/AlmaLinux (serveurs/HPC)
-  * Debian (ultra stable)
-  * Lambda Stack (pile IA pré-installée)
+  * **Streamlit** : applications web de démonstration (front simple).
+  * **FastAPI / Flask / Django** : API et backends.
 
-<h2 id="environnements-python">5. Environnements Python : garder un système propre</h2>
+* **Environnement de travail** : **Anaconda + conda + Jupyter** pour installer/organiser sans conflit.
 
-Problème classique : conflits de versions. Antidotes :
+<h2 id="linux-devops">4. Linux, Git et automatisation</h2>
 
-* **Conda/Mamba** : idéal pour explorer, un environnement par projet.
-* **Poetry** : pour publier/partager une librairie.
-* **Docker + venv** : en prod, on fige les versions dans une image.
+* **Linux** : système standard en IA (stable, reproductible, du portable au cloud).
+* **Git** : versionner le code et collaborer.
+* **GitHub Actions** : automatiser tests, packaging, déploiements (CI/CD).
 
-Règle d’or : un projet = un environnement. Évitez `pip install` global.
+<h2 id="conteneurs-orchestration">5. Conteneurs, VMs et orchestration</h2>
 
-<h2 id="acceleration-gpu">6. Activer le GPU (NVIDIA/AMD)</h2>
+* **Machine virtuelle (VM)** : émule un système complet (plus lourd, isolé fort).
+* **Conteneur** : partage le noyau du système, très léger et rapide à démarrer.
+* **Docker & docker-compose** : créer/assembler des services (API, base, UI).
+* **Kubernetes** : déployer/mettre à l’échelle des conteneurs en production (ordonnancement, résilience).
 
-* NVIDIA = CUDA/cuDNN/TensorRT (le plus mature).
-* AMD = ROCm/MIOpen (selon matériel).
+<h2 id="mlops">6. MLOps et suivi des expériences</h2>
 
-Vérifier le GPU :
-
-```
-nvidia-smi
-```
-
-Si la commande existe et liste votre GPU, installez PyTorch CUDA depuis la doc officielle. Test minimal :
-
-```python
-import torch
-x = torch.randn(1000, 1000, device="cuda")
-print("CUDA OK:", torch.cuda.is_available(), x.sum().item())
-```
-
-Multi-GPU/cluster : NCCL, Gloo, MPI et réseau rapide (InfiniBand/RDMA).
-
-<h2 id="containers-ia">7. Conteneurs : “ça marche chez moi” → “ça marche partout”</h2>
-
-* **Docker** : isole les dépendances, partage sans douleur.
-* **Kubernetes** : orchestre à grande échelle (jobs d’entraînement, autoscaling).
-* **Singularity/Apptainer** : standard HPC sans droits administrateur.
-
-Dockerfile minimal pour servie une API d’inférence (FastAPI) :
-
-```
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["uvicorn", "app:api", "--host", "0.0.0.0", "--port", "8080"]
-```
-
-<h2 id="frameworks-bibliotheques">8. Bibliothèques essentielles (traduction simple)</h2>
-
-* **scikit-learn** : ML “classique” (régression, forêts, SVM).
-* **XGBoost/LightGBM** : modèles en arbres très performants.
-* **PyTorch** : deep learning flexible, très populaire en R&D.
-* **TensorFlow/Keras** : alternative très outillée, production-friendly.
-* **Matplotlib/Seaborn/Plotly** : visualisation.
-* **MLflow/Weights & Biases** : suivi d’expériences et comparaisons.
-
-<h2 id="gestion-donnees">9. Données : simple et durable</h2>
-
-* Séparer **brut** / **traité** / **artefacts** (modèles, checkpoints).
-* Versionner (DVC, Git LFS).
-* Formats efficaces (Parquet pour tables).
-* Stockage d’artefacts compatible S3 (MinIO en local, S3/GCS en cloud).
-* Secrets dans `.env` (jamais dans Git).
-
-<h2 id="deploiement-production">10. De l’entraînement au service en ligne</h2>
-
-* Serving : FastAPI, TorchServe, TF Serving, **Triton** (optimisé NVIDIA).
-* CI/CD : GitHub Actions/GitLab CI (tests → build → push image → déploiement).
-* Observabilité : logs structurés, métriques (Prometheus/Grafana), traçage.
-
-Chaîne type :
+* **MLflow** : suivre les expériences (paramètres, métriques, modèles), gérer les artefacts.
+* **Workflow complet** : préparation → entraînement → suivi → packaging → déploiement → surveillance.
 
 ```mermaid
-flowchart TB
-  C[Code + Modèle] --> B[Build Docker]
-  B --> R[Registry]
-  R --> K[Kubernetes]
-  K --> S[Service/Ingress]
-  S --> U[Clients]
-  K --> O[Logs & Metrics]
+flowchart LR
+  A[Données] --> B[Préparation/ETL (pandas/Dask/Spark)]
+  B --> C[Entraînement (sklearn/TF/PyTorch)]
+  C --> D[Suivi (MLflow)]
+  D --> E[Packaging (Docker)]
+  E --> F[Déploiement (FastAPI/Triton)]
+  F --> G[Orchestration (Kubernetes)]
+  G --> H[Monitoring & Itérations]
 ```
 
-<h2 id="monitoring-optimisation">11. Surveiller et accélérer</h2>
+<h2 id="plateformes-cloud">7. Plateformes cloud et comparatifs</h2>
 
-* Système : `htop` (CPU/RAM), `iotop` (disque), `vmstat` (mémoire), `iostat` (IO).
-* GPU : `nvidia-smi`, `nvtop`, `gpustat`.
-* Modèles : profiler PyTorch/TF, quantification, pruning, ONNX, TensorRT.
+* **AWS SageMaker** : studio managé pour préparer, entraîner, déployer sans gérer l’infra fine.
 
-<h2 id="mini-labs">12. Mini-labs (10 à 15 minutes chacun)</h2>
+* **Databricks (ML)** : notebooks collaboratifs, Spark/Delta Lake, AutoML, MLflow intégré — disponible sur **AWS/Azure/GCP**.
 
-Mini-lab A — Environnement propre (CPU) :
+* **Snowflake vs Databricks** :
 
-```
-python3 -m venv .venv && source .venv/bin/activate
-pip install --upgrade pip "torch==2.*" "scikit-learn==1.*" "mlflow==2.*"
-python -c "import torch, mlflow, sklearn; print('OK', torch.__version__)"
-```
+  * **Snowflake** historique BI/entreposage avec fonctions IA/ML en progression (Snowpark, Cortex).
+  * **Databricks** orienté **lakehouse + Spark** et cycle ML/MLOps complet.
+  * Choix : *BI analytique forte et gouvernance SQL* → Snowflake ; *ETL/ML distribué, notebooks, data engineering* → Databricks.
 
-Mini-lab B — Vérifier le GPU :
+* **AWS Bedrock (IA générative)** : accès managé à plusieurs modèles (NLP/vision), intégrable dans des workflows d’entreprise.
 
-```
-nvidia-smi
-python - << 'PY'
-import torch
-print('CUDA dispo :', torch.cuda.is_available())
-if torch.cuda.is_available():
-    x = torch.randn(10000,10000, device='cuda'); print(float(x.sum()))
-PY
-```
+<h2 id="modalites-modeles">8. Domaines et modèles</h2>
 
-Mini-lab C — Lancer MLflow en local :
+* **Signal** (séries temporelles, capteurs), **Image** (vision), **Voix** (audio/parole), **NLP** (texte), **Multimodal** (combinaison).
+* **YOLO** : famille de modèles pour la **détection d’objets** en temps réel (vision).
+* **NLP/GenAI** : résumé, classification, extraction d’information, agents.
 
-```
-mlflow ui --port 5000
-# Ouvrir http://localhost:5000
-```
+<h2 id="pipeline-type">9. Pipeline type (du web au modèle)</h2>
 
-Mini-lab D — API d’inférence FastAPI (CPU) :
+Exemple de chaîne simple : **Interface web** → **API FastAPI** → **Modèle** → **Suivi/CI/CD** → **Docker/Kubernetes**.
 
-```
-pip install fastapi uvicorn
-cat > app.py << 'PY'
-from fastapi import FastAPI
-from pydantic import BaseModel
-import torch
-
-api = FastAPI()
-
-class Input(BaseModel):
-    x: float
-    y: float
-
-@api.post("/predict")
-def predict(inp: Input):
-    with torch.no_grad():
-        z = torch.tensor([inp.x, inp.y]).sum().item()
-    return {"sum": z}
-PY
-uvicorn app:api --reload --port 8080
-# Tester: curl -X POST http://localhost:8080/predict -H "Content-Type: application/json" -d '{"x":1.2,"y":3.4}'
+```mermaid
+sequenceDiagram
+  participant U as Utilisateur (Web)
+  participant S as Streamlit (Front)
+  participant A as FastAPI (Back)
+  participant M as Modèle (ML/DL)
+  participant L as MLflow (Suivi)
+  participant D as Docker/K8s (Déploiement)
+  U->>S: Interaction (formulaire / image)
+  S->>A: Requête HTTP
+  A->>M: Inférence
+  M-->>A: Résultat + métriques
+  A-->>S: Réponse utilisateur
+  M-->>L: Log des métriques
+  A-->>D: Image/Release pour prod
 ```
 
-<h2 id="checklist-debutant">13. Checklist débutant → opérationnel</h2>
+<h2 id="exemples-combinaisons">10. Exemples de combinaisons simples</h2>
 
-* [ ] Ubuntu 22.04 installé ou WSL2 configuré.
-* [ ] Terminal fonctionnel, `git` et `python3` présents.
-* [ ] Environnement isolé créé (venv/conda) et activé.
-* [ ] PyTorch CPU installé et import OK.
-* [ ] GPU détecté par `nvidia-smi` (si machine NVIDIA).
-* [ ] Un entraînement jouet tourne (notebook ou script).
-* [ ] MLflow affiche une expérimentation.
-* [ ] API FastAPI répond à une requête POST en local.
-* [ ] Dockerfile construit une image qui démarre l’API.
+* **Python + Streamlit** : prototype d’application web de data/IA.
+* **Python + PySide/PyQt** : interface bureau (client lourd).
+* **Python + pandas** : préparation/qualité des données.
+* **Python + scikit-learn** : ML “classique”.
+* **Python + TensorFlow/PyTorch** : deep learning.
+* **Python + FastAPI/Flask/Django** : backend/API pour exposer le modèle.
 
-<h2 id="glossaire-eclair">14. Glossaire éclair (1 phrase par mot)</h2>
+<h2 id="databricks-spark">11. Databricks & Spark en pratique (vision non-code)</h2>
 
-* **Conda/Mamba** : gestionnaire d’environnements et de paquets scientifiques.
-* **venv** : environnement Python minimal intégré à Python.
-* **Docker** : boîte fermée qui contient votre appli + ses dépendances.
-* **Kubernetes** : gère et déploie beaucoup de boîtes Docker automatiquement.
-* **SLURM** : planifie des jobs sur de gros serveurs partagés (HPC).
-* **CUDA/ROCm** : couches logicielles pour faire calculer le GPU.
-* **MLflow/W&B** : carnet de bord automatique de vos expériences.
-* **Triton/TensorRT** : accélère fortement l’inférence sur GPU NVIDIA.
-* **Parquet** : format de fichier colonne rapide pour l’analytics.
-* **DVC** : versionne les données comme Git versionne le code.
+* **Spark** : moteur distribué pour traiter de gros volumes (ETL, SQL, ML).
+* **Databricks** : espace collaboratif (notebooks, jobs planifiés, clusters managés), intégration forte MLflow/Delta Lake.
+* **Usage typique** : ingestion (bronze) → préparation (silver) → features/modèles (gold) → déploiement.
 
-<h2 id="exemples-pratiques">15. Exemples pratiques (dans le repo)</h2>
+<h2 id="linux-premiers-gestes">12. Linux — premiers gestes utiles (sans approfondir)</h2>
 
-* `scripts/env_cpu.sh` : environnement Python minimal (CPU).
-* `scripts/pytorch_cuda.sh` : installation PyTorch + CUDA + test GPU.
-* `scripts/mlflow_local.sh` : lancement rapide de MLflow.
-* `docker/Dockerfile` : image minimale pour servir une API d’inférence.
-* `examples/fastapi/` : exemple complet d’API avec test.
+Objectif : se repérer et travailler à distance en toute simplicité.
+
+**Navigation de base**
 
 ```
----
-
-Ce texte est prêt à publier et pensé pour “première écoute/lecture”.  
-Si tu veux, je peux aussi te fournir **les fichiers réels** correspondants (`requirements.txt`, `app.py`, `Dockerfile`, `scripts/*.sh`) alignés exactement sur ce plan.
+whoami         # afficher l'utilisateur courant
+pwd            # afficher le dossier courant
+cd ..          # remonter d'un dossier
+ls -la         # lister les fichiers (détails, y compris cachés)
 ```
+
+**Installer un outil d’affichage d’arborescence**
+
+```
+sudo apt install tree -y
+tree            # afficher l'arborescence (si installé)
+```
+
+**Changer d’utilisateur / session root (selon politique de l’établissement)**
+
+```
+su              # passer à root (si mot de passe root connu)
+# ou
+sudo -s         # shell root via sudoers
+exit            # revenir à l'utilisateur normal
+```
+
+**Connexion distante (SSH)**
+
+```
+sudo apt install openssh-server -y
+systemctl status ssh
+systemctl start ssh
+systemctl enable ssh
+ip a            # repérer l'adresse (ex: 10.0.0.137)
+ssh eleve@10.0.0.137   # depuis une autre machine du réseau
+```
+
+**Gestion simple des comptes (démonstration locale)**
+
+```
+sudo adduser roman
+id roman
+ls -la /home
+```
+
+<h2 id="bonnes-pratiques">13. Bonnes pratiques de départ</h2>
+
+* Un **projet = un environnement** (éviter les conflits).
+* Séparer **code / données / artefacts** (modèles, logs).
+* Tenir un **journal d’expériences** (MLflow ou tableau simple au début).
+* **Conteneuriser** avant de déployer (Docker), puis **orchestrer** si nécessaire (Kubernetes).
+* Choisir l’outil en fonction du **contexte** :
+
+  * **Snowflake** si priorité BI/SQL gouvernée, **Databricks** si priorité data engineering + ML à l’échelle.
+  * **SageMaker** si l’on veut un studio managé “tout-en-un”.
+  * **Bedrock** si l’on intègre de l’IA générative managée.
+
+<h2 id="checklist-orientation">14. Checklist d’orientation (non-code)</h2>
+
+* [ ] Où résident mes **données** ? (fichiers, base, S3, lakehouse)
+* [ ] Quel **type de calcul** ai-je ? (CPU, besoin GPU ?)
+* [ ] Mon **cadre de travail** : local, Databricks, SageMaker, autre ?
+* [ ] Comment je **suis** mes essais ? (MLflow, tableur)
+* [ ] Comment je **déploie** ? (API simple, Docker, Kubernetes)
+* [ ] Quelles **contraintes** (coût, sécurité, gouvernance) guident mes choix ?
+
+<h2 id="aller-plus-loin">15. Aller plus loin</h2>
+
+* **YOLO** pour les tâches de vision en temps réel.
+* **Dask/Spark** quand les données dépassent la mémoire d’une machine.
+* **RAPIDS (cuDF/CuPy/cuML)** pour accélérer le Python data/ML sur GPU.
+* **MLOps avancé** : registres de modèles, traçabilité, tests d’inférence, canary releases.
+* **Multimodal** : combiner texte, image, audio pour des systèmes plus riches.
+
+
