@@ -1,6 +1,4 @@
-Tu as raison — il faut un texte qui “embarque” quelqu’un qui découvre Linux + IA pour la première fois, tout en gardant tes diagrammes. Voici une version **vulgarisée**, **concrète** et **impressionnante**, avec **balises `<h1>/<h2>` + ancres**, des **mini-labs** ultra simples, un **chemin en 5 minutes**, un **glossaire éclair** et une **checklist**. A copier-coller tel quel dans ton README.
 
-````markdown
 <h1 id="intro-linux-ia">Introduction à Linux pour l'Intelligence Artificielle</h1>
 
 Objectif : passer de “je n’ai jamais touché Linux” à “je peux entraîner un modèle et le déployer proprement”.
