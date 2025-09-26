@@ -268,10 +268,132 @@ Python Backbone :
 
 <h2 id="conteneurs-orchestration">5. Conteneurs, VMs et orchestration</h2>
 
-* **Machine virtuelle (VM)** : émule un système complet (plus lourd, isolé fort).
-* **Conteneur** : partage le noyau du système, très léger et rapide à démarrer.
-* **Docker & docker-compose** : créer/assembler des services (API, base, UI).
-* **Kubernetes** : déployer/mettre à l’échelle des conteneurs en production (ordonnancement, résilience).
+
+
+## 5.1 Machines virtuelles (VM)
+
+* **Définition** : une VM émule un ordinateur complet (système d’exploitation + noyau + applications).
+* **Caractéristiques** :
+
+  * Isolation forte entre les VMs.
+  * Chaque VM embarque son propre système d’exploitation.
+  * Plus lourdes en ressources (RAM, CPU, stockage).
+  * Temps de démarrage plus long.
+* **Cas d’usage** :
+
+  * Exécuter plusieurs OS différents sur le même serveur.
+  * Héberger des applications nécessitant un isolement maximal.
+  * Environnements legacy (ex. Windows Server, Linux spécifiques).
+
+
+
+## 5.2 Conteneurs
+
+* **Définition** : un conteneur exécute une application en partageant le noyau de l’OS hôte.
+* **Caractéristiques** :
+
+  * Beaucoup plus légers que les VMs.
+  * Démarrage quasi instantané.
+  * Consomment peu de ressources.
+  * Isolation plus légère (mais suffisante pour la plupart des cas).
+* **Cas d’usage** :
+
+  * Microservices.
+  * Applications cloud natives.
+  * Déploiements rapides et portables.
+
+
+
+## 5.3 Docker et docker-compose
+
+### 5.3.1 Docker
+
+* **Outil standard de conteneurisation**.
+* Permet de créer des **images** (recettes figées d’applications) et de lancer des **conteneurs**.
+* Exemple :
+
+  ```bash
+  docker build -t mon_app .
+  docker run -p 8080:8080 mon_app
+  ```
+
+### 5.3.2 docker-compose
+
+* **Outil de composition multi-conteneurs**.
+* Défini dans un fichier `docker-compose.yml`.
+* Sert à assembler plusieurs services liés :
+
+  * **API backend**
+  * **Base de données**
+  * **Interface utilisateur**
+* Exemple minimal :
+
+  ```yaml
+  version: '3'
+  services:
+    api:
+      build: ./api
+      ports:
+        - "5000:5000"
+    db:
+      image: postgres:15
+      environment:
+        POSTGRES_USER: user
+        POSTGRES_PASSWORD: pass
+  ```
+
+
+
+## 5.4 Kubernetes
+
+* **Définition** : orchestrateur de conteneurs open-source créé par Google.
+* **Rôle principal** : déployer, gérer et mettre à l’échelle des applications conteneurisées.
+* **Fonctionnalités clés** :
+
+  * Ordonnancement automatique des conteneurs sur un cluster.
+  * Auto-réparation (si un pod crash, il est relancé).
+  * Mise à l’échelle horizontale (ajout/suppression de réplicas).
+  * Gestion de la mise en réseau, du stockage et des secrets.
+* **Cas d’usage** :
+
+  * Environnements de production à grande échelle.
+  * Plateformes multi-services (microservices).
+  * Applications nécessitant haute disponibilité et résilience.
+
+
+# 5.5 Résumé visuel
+
+```
+Infra :
+ ├─ Machine virtuelle (VM)
+ │    ├─ Isolement fort
+ │    ├─ Plus lourd (OS complet)
+ │    └─ Cas : legacy, multi-OS
+ └─ Conteneur
+      ├─ Léger, rapide
+      ├─ Partage noyau hôte
+      ├─ Cas : microservices, cloud
+      │
+      ├─ Docker → images + conteneurs
+      └─ docker-compose → assembler plusieurs services
+             ↓
+   Orchestration :
+      └─ Kubernetes → déploiement, scaling, résilience
+```
+
+
+### Résumé :
+
+- * **Machine virtuelle (VM)** : émule un système complet (plus lourd, isolé fort).
+- * **Conteneur** : partage le noyau du système, très léger et rapide à démarrer.
+- * **Docker & docker-compose** : créer/assembler des services (API, base, UI).
+- * **Kubernetes** : déployer/mettre à l’échelle des conteneurs en production (ordonnancement, résilience).
+
+
+
+
+
+
 
 <h2 id="mlops">6. MLOps et suivi des expériences</h2>
 
