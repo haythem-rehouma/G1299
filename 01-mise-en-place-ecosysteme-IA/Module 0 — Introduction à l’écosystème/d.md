@@ -546,3 +546,79 @@ ls -la /home
 * **Multimodal** : combiner texte, image, audio pour des systèmes plus riches.
 
 
+
+
+
+
+## Annexe — Carte mentale : Écosystème IA (Résumé)
+
+```mermaid
+mindmap
+root(("Écosystème IA"))
+  "Données & Stockage"
+    "Fichiers / Objets"
+      "CSV / Parquet"
+      "S3 / MinIO"
+    "Bases relationnelles"
+      "PostgreSQL"
+    "Lakehouse"
+      "Databricks (Delta Lake + Spark)"
+  "Calcul"
+    "CPU (préparation, scripts)"
+    "GPU (CUDA / ROCm, DL)"
+    "Distribué"
+      "Spark (ETL / SQL / ML)"
+      "Dask (pandas / NumPy / scikit-learn)"
+  "Langages & Libs"
+    "Python"
+    "Scikit-learn"
+    "TensorFlow / PyTorch"
+    "RAPIDS : cuDF / CuPy / cuML / cuDNN"
+  "Dev & Environnements"
+    "Linux"
+    "Conda / Jupyter / Anaconda"
+    "Git / GitHub Actions (CI / CD)"
+  "Apps & APIs"
+    "Streamlit (front rapide)"
+    "FastAPI / Flask / Django (back)"
+  "Conteneurs & Orchestration"
+    "Docker / docker-compose"
+    "Kubernetes"
+    "MLOps (MLflow)"
+  "Cloud & Services"
+    "AWS SageMaker"
+    "Databricks (ML)"
+    "Snowflake (BI / IA)"
+    "AWS Bedrock (GenAI)"
+  "Domaines & Modèles"
+    "Signal / NLP / Audio / Multimodal"
+    "YOLO (vision)"
+```
+
+
+
+## Mini-pipeline (du data au prod)
+
+```mermaid
+flowchart LR
+  A["Données"] --> B["Préparation / ETL (pandas / Dask / Spark)"]
+  B --> C["Entraînement (scikit-learn / TensorFlow / PyTorch)"]
+  C --> D["Suivi (MLflow)"]
+  D --> E["Packaging (Docker)"]
+  E --> F["Déploiement (FastAPI / Triton)"]
+  F --> G["Orchestration (Kubernetes)"]
+  G --> H["Monitoring &amp; itérations"]
+```
+
+
+
+## Checklist 30 secondes (orientation)
+
+* [ ] **Où sont les données ?** (CSV / Parquet, S3 / MinIO, PostgreSQL, Lakehouse)
+* [ ] **Quel calcul ?** (CPU vs **GPU**, besoin **distribué** Spark / Dask ?)
+* [ ] **Environnement** (local, **Databricks**, **SageMaker**, autre)
+* [ ] **Suivi** (**MLflow** ou tableau simple au début)
+* [ ] **Déploiement** (API **FastAPI**, **Docker**, **Kubernetes**)
+* [ ] **Contraintes** (coût, sécurité, gouvernance → **Snowflake** vs **Databricks** ; GenAI → **Bedrock**)
+
+
