@@ -43,21 +43,99 @@ root((Écosystème IA))
 
 <h2 id="stockage-calcul">2. Stockage et Calcul</h2>
 
-* **Stockage fichiers/objets** : Parquet/CSV sur disque, S3/MinIO en objet.
 
-* **Base relationnelle** : **PostgreSQL** pour données structurées, métadonnées et applications.
 
-* **Lakehouse** : **Databricks** (Delta Lake + Spark) pour unifier data lake et entrepôt analytique.
+## 2.1 Stockage des données
 
-* **CPU vs GPU** :
+### 2.1.1 Stockage fichiers et objets
 
-  * **CPU** polyvalent, bon pour préparation de données et petites charges.
-  * **GPU** accélère massivement l’entraînement/inférence en deep learning.
+* **Fichiers plats (CSV, Parquet)** :
 
-* **Calcul distribué** :
+  * **CSV** : format texte simple, lisible, mais peu optimisé pour l’analytique.
+  * **Parquet** : format colonne compressé, beaucoup plus efficace pour la lecture sélective et les gros volumes (ex. Big Data, Spark).
+* **Stockage objet (S3/MinIO)** :
 
-  * **Spark** (Databricks) pour gros volumes distribués (ETL, SQL, ML).
-  * **Dask** (Python natif) pour paralléliser pandas/numpy sur une ou plusieurs machines.
+  * **Amazon S3** : standard du cloud pour stocker des objets (fichiers, images, données brutes).
+  * **MinIO** : alternative open-source compatible S3, souvent déployée on-premise.
+    → Utilisé pour centraliser de grandes quantités de données, indépendamment de leur format.
+
+### 2.1.2 Bases relationnelles
+
+* **PostgreSQL** :
+
+  * Base relationnelle robuste et open source.
+  * Sert pour stocker des **données structurées**, avec schéma défini (tables, colonnes, relations).
+  * Très utilisée pour gérer des **métadonnées** et des **applications** transactionnelles (CRUD).
+
+### 2.1.3 Lakehouse
+
+* **Concept de Lakehouse** : mélange entre un **Data Lake** (souplesse, stockage brut) et un **Data Warehouse** (optimisation analytique).
+* **Databricks avec Delta Lake + Spark** :
+
+  * **Delta Lake** : couche transactionnelle sur stockage objet (S3, ADLS, etc.).
+  * **Spark** : moteur distribué (ETL, SQL, Machine Learning).
+  * Permet d’unifier ingestion, préparation et analyse sur une même plateforme.
+
+---
+
+## 2.2 Calcul : CPU vs GPU
+
+### 2.2.1 CPU (Central Processing Unit)
+
+* Polyvalent, généraliste.
+* Très bon pour les tâches séquentielles, la préparation de données (ETL léger, Pandas).
+* Suffisant pour des charges modestes ou applicatives (serveurs web, scripts, bases de données).
+
+### 2.2.2 GPU (Graphics Processing Unit)
+
+* Conçu pour le calcul parallèle massif (des milliers de cœurs).
+* Accélère considérablement l’**entraînement et l’inférence en deep learning**.
+* Incontournable pour l’IA moderne, la vision par ordinateur, et le traitement NLP à grande échelle.
+
+---
+
+## 2.3 Calcul distribué
+
+### 2.3.1 Apache Spark
+
+* **Framework distribué** pour le traitement de gros volumes de données.
+* Fonctions principales :
+
+  * **ETL** (Extract, Transform, Load) sur clusters.
+  * **SQL distribué** (SparkSQL).
+  * **Machine Learning** (MLlib).
+* Intégré dans **Databricks** pour un environnement complet Data + ML.
+
+### 2.3.2 Dask
+
+* Bibliothèque Python native pour paralléliser **Pandas**, **NumPy** et **scikit-learn**.
+* Peut tourner :
+
+  * en **local** (sur un laptop multicœurs).
+  * en **cluster** (plusieurs machines).
+* Plus simple à adopter que Spark pour les data scientists habitués à l’écosystème Python.
+
+---
+
+# 2.4 Résumé visuel (schéma conceptuel)
+
+```
+Stockage :
+ ├─ Fichiers : CSV, Parquet
+ ├─ Objet : S3, MinIO
+ └─ Base relationnelle : PostgreSQL
+        ↓
+Lakehouse (Databricks : Delta Lake + Spark)
+        ↓
+Calcul :
+ ├─ CPU : polyvalent, préparation
+ ├─ GPU : deep learning
+ └─ Distribué :
+       ├─ Spark : Big Data, ETL, ML
+       └─ Dask : Python, pandas/numpy
+```
+
+
 
 <h2 id="python-base">3. Python comme colonne vertébrale</h2>
 
