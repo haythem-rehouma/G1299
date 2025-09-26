@@ -76,7 +76,7 @@ root((Écosystème IA))
   * **Spark** : moteur distribué (ETL, SQL, Machine Learning).
   * Permet d’unifier ingestion, préparation et analyse sur une même plateforme.
 
----
+
 
 ## 2.2 Calcul : CPU vs GPU
 
@@ -92,7 +92,7 @@ root((Écosystème IA))
 * Accélère considérablement l’**entraînement et l’inférence en deep learning**.
 * Incontournable pour l’IA moderne, la vision par ordinateur, et le traitement NLP à grande échelle.
 
----
+
 
 ## 2.3 Calcul distribué
 
@@ -115,7 +115,7 @@ root((Écosystème IA))
   * en **cluster** (plusieurs machines).
 * Plus simple à adopter que Spark pour les data scientists habitués à l’écosystème Python.
 
----
+
 
 # 2.4 Résumé visuel (schéma conceptuel)
 
