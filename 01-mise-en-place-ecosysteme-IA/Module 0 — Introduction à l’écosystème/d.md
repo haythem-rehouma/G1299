@@ -553,43 +553,50 @@ ls -la /home
 ## Annexe — Carte mentale : Écosystème IA (Résumé)
 
 ```mermaid
-mindmap
-  root(("Écosystème IA"))
-    "Données & Stockage"
-      "Fichiers / Objets"
-        "CSV / Parquet"
-        "S3 / MinIO"
-      "Bases relationnelles"
-        "PostgreSQL"
-      "Lakehouse"
-        "Databricks (Delta Lake + Spark)"
-    "Calcul"
-      "CPU (préparation, scripts)"
-      "GPU (CUDA / ROCm, DL)"
-      "Distribué"
-        "Spark (ETL / SQL / ML)"
-        "Dask (pandas / NumPy / scikit-learn)"
-    "Langages & Libs"
-      "Python"
-      "Scikit-learn"
-      "TensorFlow / PyTorch"
-      "RAPIDS : cuDF / CuPy / cuML / cuDNN"
-    "Dev & Environnements"
-      "Linux"
-      "Conda / Jupyter / Anaconda"
-      "Git / GitHub Actions (CI / CD)"
-    "Apps & APIs"
-      "Streamlit (front rapide)"
-      "FastAPI / Flask / Django (back)"
-    "Conteneurs & Orchestration"
-      "Docker / docker-compose"
-      "Kubernetes"
-      "MLOps (MLflow)"
-    "Cloud & Services"
-      "AWS SageMaker"
-      "Databricks (ML)"
-      "Snowflake (BI / IA)"
-      "AWS Bedrock (GenAI)"
+flowchart TD
+  R["Écosystème IA"]
+
+  R --> S["Données &amp; Stockage"]
+  S --> S1["Fichiers / Objets"]
+  S1 --> S1a["CSV / Parquet"]
+  S1 --> S1b["S3 / MinIO"]
+  S --> S2["Bases relationnelles"]
+  S2 --> S2a["PostgreSQL"]
+  S --> S3["Lakehouse"]
+  S3 --> S3a["Databricks (Delta Lake + Spark)"]
+
+  R --> C["Calcul"]
+  C --> C1["CPU (préparation, scripts)"]
+  C --> C2["GPU (CUDA / ROCm, DL)"]
+  C --> C3["Distribué"]
+  C3 --> C3a["Spark (ETL / SQL / ML)"]
+  C3 --> C3b["Dask (pandas / NumPy / scikit-learn)"]
+
+  R --> L["Langages &amp; Libs"]
+  L --> L1["Python"]
+  L --> L2["Scikit-learn"]
+  L --> L3["TensorFlow / PyTorch"]
+  L --> L4["RAPIDS : cuDF / CuPy / cuML / cuDNN"]
+
+  R --> D["Dev &amp; Environnements"]
+  D --> D1["Linux"]
+  D --> D2["Conda / Jupyter / Anaconda"]
+  D --> D3["Git / GitHub Actions (CI / CD)"]
+
+  R --> A["Apps &amp; APIs"]
+  A --> A1["Streamlit (front rapide)"]
+  A --> A2["FastAPI / Flask / Django (back)"]
+
+  R --> O["Conteneurs &amp; Orchestration"]
+  O --> O1["Docker / docker-compose"]
+  O --> O2["Kubernetes"]
+  O --> O3["MLOps (MLflow)"]
+
+  R --> CL["Cloud &amp; Services"]
+  CL --> CL1["AWS SageMaker"]
+  CL --> CL2["Databricks (ML)"]
+  CL --> CL3["Snowflake (BI / IA)"]
+  CL --> CL4["AWS Bedrock (GenAI)"]
 
 ```
 
