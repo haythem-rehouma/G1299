@@ -94,13 +94,14 @@ root((Écosystème IA))
 
 ```mermaid
 flowchart LR
-  A[Données] --> B[Préparation/ETL (pandas/Dask/Spark)]
-  B --> C[Entraînement (sklearn/TF/PyTorch)]
-  C --> D[Suivi (MLflow)]
-  D --> E[Packaging (Docker)]
-  E --> F[Déploiement (FastAPI/Triton)]
-  F --> G[Orchestration (Kubernetes)]
-  G --> H[Monitoring & Itérations]
+  A["Données"] --> B["Préparation / ETL (pandas / Dask / Spark)"]
+  B --> C["Entraînement (scikit-learn / TensorFlow / PyTorch)"]
+  C --> D["Suivi (MLflow)"]
+  D --> E["Packaging (Docker)"]
+  E --> F["Déploiement (FastAPI / Triton)"]
+  F --> G["Orchestration (Kubernetes)"]
+  G --> H["Monitoring &amp; Itérations"]
+
 ```
 
 <h2 id="plateformes-cloud">7. Plateformes cloud et comparatifs</h2>
