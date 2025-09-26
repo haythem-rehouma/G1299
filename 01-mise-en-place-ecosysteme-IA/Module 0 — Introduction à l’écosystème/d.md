@@ -174,6 +174,3 @@ Dans le dossier du repo :
 
 ```
 
-
-Veux-tu que je te propose aussi un **fichier `SUMMARY.md`** (style GitBook / MkDocs) pour générer automatiquement un menu latéral avec ces ancres ?
-```
