@@ -139,18 +139,126 @@ Calcul :
 
 <h2 id="python-base">3. Python comme colonne vertébrale</h2>
 
-* **Nettoyage/Analyse** : `pandas` (tableaux), `numpy` (math), équivalents GPU : **cuDF**, **CuPy**, **cuML**, **cuDNN**.
 
-* **Machine Learning** : **scikit-learn**.
 
-* **Deep Learning** : **TensorFlow** et **PyTorch**.
+## 3.1 Nettoyage et Analyse de données
 
-* **Interfaces** :
+### 3.1.1 Outils CPU classiques
 
-  * **Streamlit** : applications web de démonstration (front simple).
-  * **FastAPI / Flask / Django** : API et backends.
+* **pandas** :
 
-* **Environnement de travail** : **Anaconda + conda + Jupyter** pour installer/organiser sans conflit.
+  * Manipulation de données tabulaires (DataFrame).
+  * Lecture/écriture de CSV, Parquet, SQL.
+  * Filtrage, groupby, agrégation, fusion de tables.
+* **NumPy** :
+
+  * Base mathématique de l’écosystème scientifique Python.
+  * Tableaux multidimensionnels (`ndarray`).
+  * Opérations vectorisées rapides (produits scalaires, matrices, transformations).
+
+### 3.1.2 Équivalents GPU
+
+* **cuDF** : alternative GPU de pandas (API presque identique).
+* **CuPy** : équivalent GPU de NumPy (API compatible, calculs matriciels accélérés).
+* **cuML** : version GPU de scikit-learn (algorithmes ML rapides).
+* **cuDNN** : librairie NVIDIA optimisée pour accélérer TensorFlow et PyTorch.
+
+→ Objectif : tirer parti du GPU **sans réécrire tout le code Python**.
+
+
+
+## 3.2 Machine Learning classique
+
+* **scikit-learn** :
+
+  * Standard pour l’apprentissage automatique traditionnel.
+  * Algorithmes : régression, classification, clustering, réduction de dimensions.
+  * API simple : `fit()`, `predict()`, `transform()`.
+  * Convient aux datasets de taille moyenne (jusqu’à quelques millions de lignes).
+
+
+
+## 3.3 Deep Learning
+
+* **TensorFlow** :
+
+  * Développé par Google.
+  * Orienté production, déploiement facile (TensorFlow Serving, TFLite, TF.js).
+  * Plus verbeux mais très optimisé.
+* **PyTorch** :
+
+  * Développé par Facebook/Meta.
+  * Plus intuitif, flexible, orienté recherche.
+  * API Pythonique, dynamique (eager execution).
+
+→ PyTorch domine la recherche, TensorFlow domine l’industrie/production.
+
+
+
+## 3.4 Interfaces et Applications
+
+### 3.4.1 Streamlit
+
+* Framework Python pour créer **des applications web de démonstration**.
+* Idéal pour les data scientists → montrer un modèle ou une visualisation sans coder un frontend complexe.
+* Exemple : un simple `st.write(df)` affiche une table interactive.
+
+### 3.4.2 FastAPI, Flask et Django
+
+* **FastAPI** :
+
+  * Framework moderne et rapide pour APIs.
+  * Typage fort avec Pydantic, async natif.
+* **Flask** :
+
+  * Micro-framework léger.
+  * Simple pour petits services ou prototypes.
+* **Django** :
+
+  * Framework complet (ORM, authentification, admin, templates).
+  * Convient pour des applications web complexes.
+
+→ Tous permettent de **déployer un modèle en backend** exposé via une API.
+
+
+## 3.5 Environnement de travail
+
+### 3.5.1 Anaconda et conda
+
+* **Anaconda** : distribution Python scientifique.
+* Inclus : pandas, NumPy, scikit-learn, Jupyter.
+* **conda** : gestionnaire d’environnements isolés.
+
+  * Permet d’éviter les conflits de versions.
+  * Exemple : `conda create -n ml_env python=3.10`.
+
+### 3.5.2 Jupyter Notebook / JupyterLab
+
+* Interface interactive pour écrire du code Python + visualisations.
+* Supporte Markdown, graphiques matplotlib/plotly.
+* Parfait pour le prototypage, l’analyse exploratoire, les démonstrations pédagogiques.
+
+
+# 3.6 Résumé visuel
+
+```
+Python Backbone :
+ ├─ Nettoyage/Analyse :
+ │    ├─ CPU : pandas, NumPy
+ │    └─ GPU : cuDF, CuPy, cuML, cuDNN
+ ├─ Machine Learning : scikit-learn
+ ├─ Deep Learning : TensorFlow, PyTorch
+ ├─ Interfaces :
+ │    ├─ Streamlit (front rapide)
+ │    ├─ FastAPI / Flask (API backend)
+ │    └─ Django (web complet)
+ └─ Environnement :
+      ├─ Anaconda + conda
+      └─ Jupyter (Notebook/Lab)
+```
+
+
+
 
 <h2 id="linux-devops">4. Linux, Git et automatisation</h2>
 
