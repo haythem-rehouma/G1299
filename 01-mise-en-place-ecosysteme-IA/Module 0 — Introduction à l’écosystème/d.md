@@ -553,50 +553,37 @@ ls -la /home
 ## Annexe — Carte mentale : Écosystème IA (Résumé)
 
 ```mermaid
-flowchart TD
+flowchart TB
   R["Écosystème IA"]
 
+  %% --- Données & Stockage (vertical stack)
   R --> S["Données &amp; Stockage"]
   S --> S1["Fichiers / Objets"]
-  S1 --> S1a["CSV / Parquet"]
-  S1 --> S1b["S3 / MinIO"]
-  S --> S2["Bases relationnelles"]
-  S2 --> S2a["PostgreSQL"]
-  S --> S3["Lakehouse"]
-  S3 --> S3a["Databricks (Delta Lake + Spark)"]
+  S1 --> S1a["CSV / Parquet"] --> S1b["S3 / MinIO"] --> S2["Bases relationnelles"] --> S2a["PostgreSQL"] --> S3["Lakehouse"] --> S3a["Databricks (Delta Lake + Spark)"]
 
+  %% --- Calcul (vertical stack)
   R --> C["Calcul"]
-  C --> C1["CPU (préparation, scripts)"]
-  C --> C2["GPU (CUDA / ROCm, DL)"]
-  C --> C3["Distribué"]
-  C3 --> C3a["Spark (ETL / SQL / ML)"]
-  C3 --> C3b["Dask (pandas / NumPy / scikit-learn)"]
+  C --> C1["CPU<br/>(préparation, scripts)"] --> C2["GPU<br/>(CUDA / ROCm, DL)"] --> C3["Distribué"] --> C3a["Spark (ETL / SQL / ML)"] --> C3b["Dask (pandas / NumPy / scikit-learn)"]
 
+  %% --- Langages & Libs (vertical stack)
   R --> L["Langages &amp; Libs"]
-  L --> L1["Python"]
-  L --> L2["Scikit-learn"]
-  L --> L3["TensorFlow / PyTorch"]
-  L --> L4["RAPIDS : cuDF / CuPy / cuML / cuDNN"]
+  L --> L1["Python"] --> L2["Scikit-learn"] --> L3["TensorFlow / PyTorch"] --> L4["RAPIDS : cuDF / CuPy / cuML / cuDNN"]
 
+  %% --- Dev & Environnements (vertical stack)
   R --> D["Dev &amp; Environnements"]
-  D --> D1["Linux"]
-  D --> D2["Conda / Jupyter / Anaconda"]
-  D --> D3["Git / GitHub Actions (CI / CD)"]
+  D --> D1["Linux"] --> D2["Conda / Jupyter / Anaconda"] --> D3["Git / GitHub Actions (CI / CD)"]
 
+  %% --- Apps & APIs (vertical stack)
   R --> A["Apps &amp; APIs"]
-  A --> A1["Streamlit (front rapide)"]
-  A --> A2["FastAPI / Flask / Django (back)"]
+  A --> A1["Streamlit (front rapide)"] --> A2["FastAPI / Flask / Django (back)"]
 
+  %% --- Conteneurs & Orchestration (vertical stack)
   R --> O["Conteneurs &amp; Orchestration"]
-  O --> O1["Docker / docker-compose"]
-  O --> O2["Kubernetes"]
-  O --> O3["MLOps (MLflow)"]
+  O --> O1["Docker / docker-compose"] --> O2["Kubernetes"] --> O3["MLOps (MLflow)"]
 
+  %% --- Cloud & Services (vertical stack)
   R --> CL["Cloud &amp; Services"]
-  CL --> CL1["AWS SageMaker"]
-  CL --> CL2["Databricks (ML)"]
-  CL --> CL3["Snowflake (BI / IA)"]
-  CL --> CL4["AWS Bedrock (GenAI)"]
+  CL --> CL1["AWS SageMaker"] --> CL2["Databricks (ML)"] --> CL3["Snowflake (BI / IA)"] --> CL4["AWS Bedrock (GenAI)"]
 
 ```
 
