@@ -109,3 +109,111 @@
   * `merge` garde la trace de toutes les branches.
   * `rebase` réécrit l’historique pour le rendre linéaire.
 
+
+
+# Annexe 1 
+
+
+
+
+# 1. **Git Merge**
+
+👉 **Ce que ça fait** :
+
+* Il **fusionne** deux branches et garde l’historique tel quel.
+* Résultat : un **commit de merge** est ajouté pour indiquer la fusion.
+
+### Exemple visuel :
+
+```
+A---B---C  (master)
+     \
+      D---E  (feature)
+```
+
+Après un `git merge master` dans `feature` :
+
+```
+A---B---C  (master)
+     \     \
+      D---E---M  (feature)
+```
+
+(`M` = commit de merge)
+
+✔ Avantages :
+
+* On garde **toute l’histoire réelle**.
+* Moins risqué, car on ne réécrit pas l’historique.
+
+✘ Inconvénients :
+
+* L’historique peut devenir compliqué (beaucoup de branches et de merges).
+
+
+
+# 2. **Git Rebase**
+
+👉 **Ce que ça fait** :
+
+* Il **déplace/rejoue** tes commits au-dessus de la branche cible.
+* Résultat : un historique **linéaire**, comme si tes commits avaient été créés après les derniers de `master`.
+
+### Exemple visuel :
+
+```
+A---B---C  (master)
+     \
+      D---E  (feature)
+```
+
+Après un `git rebase master` dans `feature` :
+
+```
+A---B---C  (master)
+          \
+           D'---E'  (feature)
+```
+
+(`D'` et `E'` sont des copies de D et E, rejoués sur C)
+
+✔ Avantages :
+
+* Historique **propre et linéaire**.
+* Plus facile à lire avec `git log`.
+
+✘ Inconvénients :
+
+* **Réécrit l’historique** → dangereux si les commits sont déjà poussés et partagés.
+* Peut entraîner plus de conflits si beaucoup de commits à rejouer.
+
+
+
+# 3. **Quand utiliser Merge ou Rebase ?**
+
+### Utilise **Merge** quand :
+
+* Tu veux garder une trace claire de **toutes les branches et fusions**.
+* Tu travailles en équipe et tu veux éviter les risques liés à la réécriture de l’historique.
+* Exemple : intégrer une feature dans `main` → `git merge`.
+
+### Utilise **Rebase** quand :
+
+* Tu veux un **historique linéaire et propre** (souvent demandé dans les projets open source).
+* Tu es en train de travailler seul sur ta branche et tu veux la mettre à jour avec `main` avant de faire un merge final.
+* Exemple : avant un pull request → `git rebase main`.
+
+
+
+# 4. **Bonnes pratiques**
+
+* Sur **ta branche personnelle** (pas encore poussée) → `git rebase` est parfait.
+* Pour fusionner une **feature terminée dans main** → privilégie `git merge`.
+* **Jamais rebase une branche déjà poussée** et partagée avec d’autres (ça casse l’historique).
+
+
+
+👉 En résumé :
+
+* **Merge** = sécurité + historique complet.
+* **Rebase** = propreté + historique linéaire.
