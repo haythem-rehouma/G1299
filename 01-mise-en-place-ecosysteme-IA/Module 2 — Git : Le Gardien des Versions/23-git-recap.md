@@ -217,3 +217,30 @@ A---B---C  (master)
 
 * **Merge** = sécurité + historique complet.
 * **Rebase** = propreté + historique linéaire.
+
+
+
+
+
+#  Tableau comparatif Git Merge vs Git Rebase
+
+| Aspect                 | **Merge**                                                                                                                       | **Rebase**                                                                                                |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Principe**           | Crée un **commit de merge** qui fusionne deux branches.                                                                         | **Rejoue** les commits de ta branche par-dessus une autre (réécrit l’historique).                         |
+| **Historique**         | Conserve **toute l’histoire réelle** (branches + commits).                                                                      | Produit un **historique linéaire** et simplifié.                                                          |
+| **Exemple visuel**     | <pre>A---B---C (master)<br> \      <br>  D---E---M (feature)</pre>`M` = commit de merge                                         | <pre>A---B---C (master)<br>        <br>         D'---E' (feature)</pre>`D'` et `E'` = commits rejoués     |
+| **Avantages**          | - Plus sûr (pas de réécriture)<br>- Recommandé pour travail collaboratif<br>- Montre quand les branches ont divergé et fusionné | - Historique plus lisible<br>- Évite les commits de merge « bruit »<br>- Idéal pour des PR propres        |
+| **Inconvénients**      | - Historique peut devenir complexe avec beaucoup de merges                                                                      | - Réécrit l’historique (dangereux si déjà partagé)<br>- Peut créer beaucoup de conflits si longue branche |
+| **Quand l’utiliser ?** | - Fusionner une feature terminée dans `main`<br>- Collaborer sans casser l’historique                                           | - Mettre à jour ta branche perso avant merge/PR<br>- Nettoyer l’historique avant de pousser               |
+| **Commande type**      | `git merge master`                                                                                                              | `git rebase master`                                                                                       |
+
+
+
+#  Règle d’or simplifiée 
+
+* **Avant de pousser ta branche** → tu peux utiliser **rebase** pour nettoyer.
+* **Quand tu fusionnes dans `main` ou `develop`** → utilise **merge** pour éviter les problèmes.
+* **Jamais rebase une branche déjà partagée** avec d’autres.
+
+
+
