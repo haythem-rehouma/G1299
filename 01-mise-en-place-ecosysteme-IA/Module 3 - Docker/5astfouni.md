@@ -136,3 +136,27 @@ Accès: [http://localhost:5678](http://localhost:5678)
 * **Mises à jour**: `docker compose pull && docker compose up -d`.
 * **Arrêt**: `docker compose down` (les données persistent dans `n8n_data` et `pg_data`).
 
+
+# Annexe
+
+
+
+```bash
+su
+apt install docker-compose
+docker --version
+docker-compose --version
+cd Desktop
+mkdir n8n-demo1
+cd n8n-demo1/
+mkdir -p n8n_data pg_data
+sudo chown -R 1000:1000 n8n_data pg_data
+nano docker-compose.yml
+nano .env
+docker-compose pull
+docker-compose up -d
+docker ps
+docker logs n8n
+docker logs n8n-postgres
+docker-compose down
+```
