@@ -119,8 +119,8 @@ sudo chown -R 1000:1000 n8n_data pg_data
 # 3) Démarrage
 
 ```bash
-docker compose pull
-docker compose up -d
+docker-compose pull
+docker-compose up -d
 docker logs -f n8n   # Ctrl+C pour quitter les logs
 ```
 
