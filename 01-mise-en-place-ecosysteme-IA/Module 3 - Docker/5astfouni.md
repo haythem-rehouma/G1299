@@ -130,7 +130,7 @@ Accès: [http://localhost:5678](http://localhost:5678)
 <br/>
 <br/>
 
-### 4) Notes utiles
+# 4) Notes utiles
 
 * **Erreur EACCES**: si tu la vois encore, vérifie que `n8n_data` appartient bien à `1000:1000` et que ton `DATA_FOLDER` dans `.env` est **absolu**.
 * **Mises à jour**: `docker compose pull && docker compose up -d`.
