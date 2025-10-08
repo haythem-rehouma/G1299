@@ -136,6 +136,8 @@ Accès: [http://localhost:5678](http://localhost:5678)
 * **Mises à jour**: `docker compose pull && docker compose up -d`.
 * **Arrêt**: `docker compose down` (les données persistent dans `n8n_data` et `pg_data`).
 
+<br/>
+<br/>
 
 # Annexe
 
