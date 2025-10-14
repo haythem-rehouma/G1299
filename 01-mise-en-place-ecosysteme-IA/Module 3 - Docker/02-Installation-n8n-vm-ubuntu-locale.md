@@ -168,6 +168,8 @@ docker-compose down
 
 ```bash
 # 1) (si besoin) créer l'utilisateur et définir son mot de passe
+su (ou sudo -s) ==> tu mets le mot de passe
+whoami ==> root
 sudo adduser eleve
 
 # 2) ajouter l'utilisateur au groupe "sudo" (droits admin persistants)
