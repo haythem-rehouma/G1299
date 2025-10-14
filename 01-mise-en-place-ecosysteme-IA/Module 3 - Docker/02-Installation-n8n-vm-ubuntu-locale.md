@@ -139,7 +139,7 @@ Accès: [http://localhost:5678](http://localhost:5678)
 <br/>
 <br/>
 
-# Commandes à exécuter :
+# 5) Commandes à exécuter :
 
 ```bash
 su
@@ -164,7 +164,7 @@ docker-compose down
 
 <br/>
 
-# Annexe 1 - donner des droits sudo **permanents** à l’utilisateur `eleve`.
+# 6) Annexe 1 - donner des droits sudo **permanents** à l’utilisateur `eleve`.
 
 ```bash
 # 1) (si besoin) créer l'utilisateur et définir son mot de passe
@@ -202,7 +202,7 @@ sudo visudo -f /etc/sudoers.d/eleve
 
 <br/>
 
-# Annexe 2  - Les commandes (selon la distro) pour donner **définitivement** les droits `sudo` à l’utilisateur `eleve`.
+# 7) Annexe 2  - Les commandes (selon la distro) pour donner **définitivement** les droits `sudo` à l’utilisateur `eleve`.
 
 ### Debian/Ubuntu & dérivés
 
