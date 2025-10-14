@@ -143,22 +143,22 @@ Accès: [http://localhost:5678](http://localhost:5678)
 
 ```bash
 su
-apt install docker-compose
-docker --version
-docker-compose --version
+sudo apt install docker-compose
+sudo docker --version
+sudo docker-compose --version
 cd Desktop
-mkdir n8n-demo1
+sudo mkdir n8n-demo1
 cd n8n-demo1/
-mkdir -p n8n_data pg_data
+sudo mkdir -p n8n_data pg_data
 sudo chown -R 1000:1000 n8n_data pg_data
-nano docker-compose.yml
-nano .env
-docker-compose pull
-docker-compose up -d
-docker ps
-docker logs n8n
-docker logs n8n-postgres
-docker-compose down
+sudo nano docker-compose.yml
+sudo nano .env
+sudo docker-compose pull
+sudo docker-compose up -d
+sudo docker ps
+sudo docker logs n8n
+sudo docker logs n8n-postgres
+sudo docker-compose down
 ```
 
 
