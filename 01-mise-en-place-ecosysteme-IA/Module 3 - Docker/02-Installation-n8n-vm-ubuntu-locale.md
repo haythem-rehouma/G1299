@@ -142,7 +142,7 @@ Accès: [http://localhost:5678](http://localhost:5678)
 # 5) Commandes à exécuter :
 
 ```bash
-su
+su - eleve
 sudo apt install docker-compose
 sudo docker --version
 sudo docker-compose --version
