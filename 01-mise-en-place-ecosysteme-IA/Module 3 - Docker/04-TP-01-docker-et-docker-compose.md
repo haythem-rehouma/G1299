@@ -6,8 +6,3 @@
 👉 Dossier : [https://drive.google.com/drive/folders/1zsf2OYETuxKS_5GoWuDF5H0SVrEkG0vo?usp=sharing](https://drive.google.com/drive/folders/1zsf2OYETuxKS_5GoWuDF5H0SVrEkG0vo?usp=sharing)
 
 
-
-
-
-Merci,
-[Votre nom]
