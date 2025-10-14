@@ -142,6 +142,68 @@ Accès: [http://localhost:5678](http://localhost:5678)
 # Annexe
 
 
+Voici les commandes (selon la distro) pour donner **définitivement** les droits `sudo` à l’utilisateur `eleve`.
+
+# Debian/Ubuntu & dérivés
+
+1. (Facultatif) Créer l’utilisateur s’il n’existe pas
+
+```bash
+sudo adduser eleve
+# ou en root : adduser eleve
+```
+
+2. Ajouter `eleve` au groupe `sudo` (droits admin persistants)
+
+```bash
+sudo usermod -aG sudo eleve
+# alternative équivalente :
+sudo adduser eleve sudo
+```
+
+3. Rafraîchir la session et vérifier
+
+```bash
+# se reconnecter ou :
+su - eleve
+groups
+sudo -v        # teste l’accès sudo
+sudo -l        # liste des privilèges
+```
+
+# RHEL/CentOS/Rocky/Alma (et Fedora)
+
+1. Ajouter `eleve` au groupe `wheel`
+
+```bash
+sudo usermod -aG wheel eleve
+```
+
+2. Vérifier que `wheel` a bien les droits sudo (dans /etc/sudoers)
+
+```bash
+sudo visudo
+# ligne à avoir décommentée :
+# %wheel ALL=(ALL) ALL
+```
+
+# (Optionnel) Sudo **sans mot de passe** pour `eleve`
+
+> À utiliser avec prudence (sécurité).
+
+```bash
+sudo visudo -f /etc/sudoers.d/eleve
+# y mettre exactement :
+eleve ALL=(ALL) NOPASSWD:ALL
+```
+
+# Notes utiles
+
+* **Reconnexion nécessaire** pour que l’ajout au groupe prenne effet (`su - eleve` ou nouvelle session).
+* **Ne pas** éditer `/etc/sudoers` avec un éditeur classique : utilisez toujours `visudo` (vérification de syntaxe).
+
+
+# Commandes à exécuter :
 
 ```bash
 su
@@ -162,3 +224,111 @@ docker logs n8n
 docker logs n8n-postgres
 docker-compose down
 ```
+
+
+<br/>
+
+# Annexe 1 - donner des droits sudo **permanents** à l’utilisateur `eleve`.
+
+```bash
+# 1) (si besoin) créer l'utilisateur et définir son mot de passe
+sudo adduser eleve
+
+# 2) ajouter l'utilisateur au groupe "sudo" (droits admin persistants)
+sudo usermod -aG sudo eleve
+# (équivalent) sudo adduser eleve sudo
+
+# 3) vérifier
+id eleve        # voit le groupe sudo ?
+getent group sudo
+sudo -v         # teste sudo (si vous êtes déjà dans une session avec sudo)
+su - eleve      # se reconnecter en tant que eleve
+groups          # doit afficher ... sudo
+sudo -l         # liste des privilèges
+
+# 4) (optionnel, à vos risques) sudo sans mot de passe pour eleve
+# Ouvre un fichier sudoers dédié et sûr :
+sudo visudo -f /etc/sudoers.d/eleve
+# -> y coller la ligne suivante, puis enregistrer :
+# eleve ALL=(ALL) NOPASSWD:ALL
+```
+
+### Notes rapides
+
+* L’ajout au groupe **ne prend effet qu’à la reconnexion** de `eleve` (`su - eleve` ou nouvelle session SSH).
+* Toujours modifier la configuration via `visudo` (vérifie la syntaxe).
+* Pour revenir en arrière :
+
+  ```bash
+  sudo gpasswd -d eleve sudo
+  sudo rm -f /etc/sudoers.d/eleve   # si vous aviez activé NOPASSWD
+  ```
+
+<br/>
+
+# Annexe 2  - Les commandes (selon la distro) pour donner **définitivement** les droits `sudo` à l’utilisateur `eleve`.
+
+### Debian/Ubuntu & dérivés
+
+1. (Facultatif) Créer l’utilisateur s’il n’existe pas
+
+```bash
+sudo adduser eleve
+# ou en root : adduser eleve
+```
+
+2. Ajouter `eleve` au groupe `sudo` (droits admin persistants)
+
+```bash
+sudo usermod -aG sudo eleve
+# alternative équivalente :
+sudo adduser eleve sudo
+```
+
+3. Rafraîchir la session et vérifier
+
+```bash
+# se reconnecter ou :
+su - eleve
+groups
+sudo -v        # teste l’accès sudo
+sudo -l        # liste des privilèges
+```
+
+#### RHEL/CentOS/Rocky/Alma (et Fedora)
+
+1. Ajouter `eleve` au groupe `wheel`
+
+```bash
+sudo usermod -aG wheel eleve
+```
+
+2. Vérifier que `wheel` a bien les droits sudo (dans /etc/sudoers)
+
+```bash
+sudo visudo
+# ligne à avoir décommentée :
+# %wheel ALL=(ALL) ALL
+```
+
+#### (Optionnel) Sudo **sans mot de passe** pour `eleve`
+
+> À utiliser avec prudence (sécurité).
+
+```bash
+sudo visudo -f /etc/sudoers.d/eleve
+# y mettre exactement :
+eleve ALL=(ALL) NOPASSWD:ALL
+```
+
+#### Notes utiles
+
+* **Reconnexion nécessaire** pour que l’ajout au groupe prenne effet (`su - eleve` ou nouvelle session).
+* **Ne pas** éditer `/etc/sudoers` avec un éditeur classique : utilisez toujours `visudo` (vérification de syntaxe).
+* Pour vérifier la présence de `sudo` (sur Debian/Ubuntu minimal) :
+
+  ```bash
+  sudo apt update && sudo apt install -y sudo
+  ```
+
+
