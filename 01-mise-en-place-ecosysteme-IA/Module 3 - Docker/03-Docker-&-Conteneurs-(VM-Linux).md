@@ -1,8 +1,12 @@
-# Évaluation sommative — Docker & Conteneurs (VM Linux)
+# Évaluation OPTIONELLE — Docker & Conteneurs (VM Linux)
 
-**Durée :** 2 h 15  •  **Total :** 100 points  •  **Barème de réussite :** ≥ 60/100
-**Modalité :** en laboratoire (sur VM Linux) + remise d’un dossier `.zip` sur Moodle / Teams
-**Ressources autorisées :** aide‑mémoire personnel (papier) + `man`, `--help`. Internet **non** autorisé sauf documentation locale et `--help`.
+> Note : Ce travail n'est pas obligatoire. Son objectif est de renforcer les connaissances acquises dans le cours !
+> La correction sera fournie à la fin du document.
+
+
+- **Durée :** 2 h 15  
+- **Modalité :** en laboratoire (sur VM Linux) + remise d’un dossier `.zip` sur Moodle / Teams
+- **Ressources autorisées :** aide‑mémoire personnel (papier) + `man`, `--help`. Internet autorisé sauf documentation locale et `--help`.
 
 <br/>
 
