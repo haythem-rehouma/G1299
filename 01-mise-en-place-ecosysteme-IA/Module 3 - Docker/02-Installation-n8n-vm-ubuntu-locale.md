@@ -1,3 +1,9 @@
+
+## Documentation officielle: 
+
+- https://docs.n8n.io/hosting/installation/docker/#using-with-postgresql
+
+## Version du cours avec docker-compose
 # 1) Fichiers
 
 #### `docker-compose.yml`
